@@ -1,7 +1,5 @@
 [build]
-dockerfilePath = "Dockerfile"
-# Use the production distroless stage
-buildTarget = "release"
+dockerfilePath = "Dockerfile.railway"
 
 [deploy]
 startCommand = "zeroclaw gateway"

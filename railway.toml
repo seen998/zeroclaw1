@@ -1,17 +1,13 @@
 [build]
 builder = "dockerfile"
+dockerfilePath = "Dockerfile.railway"
 
 [deploy]
-healthcheckPath = "/setup/healthz"
-healthcheckTimeout = 300
+healthcheckPath = "/health"
+healthcheckTimeout = 10
 restartPolicyType = "on_failure"
 
-# Require a persistent volume mounted at /data (Railway).
-requiredMountPath = "/data"
-
-[variables]
-# NOTE: Railway injects PORT automatically.
-# Do not set PORT here; Railway templates may not apply it reliably and hardcoding
-# can cause domain routing mismatches.
-OPENCLAW_STATE_DIR = "/data/.openclaw"
-OPENCLAW_WORKSPACE_DIR = "/data/workspace"
+# Require a persistent volume mounted at /zeroclaw-data (Railway).
+# The entrypoint script handles ownership fixup since Railway
+# mounts volumes as root.
+requiredMountPath = "/zeroclaw-data"

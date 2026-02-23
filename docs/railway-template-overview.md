@@ -4,7 +4,7 @@ ZeroClaw is a Rust-first autonomous agent runtime optimized for performance, sec
 
 ## About Hosting ZeroClaw
 
-Deploying ZeroClaw involves building a statically compiled Rust binary inside a multi-stage Docker pipeline. The release image uses a distroless base (`gcr.io/distroless/cc-debian13:nonroot`) with no shell or package manager, running as a non-root user for minimal attack surface. Railway handles the Docker build automatically — you provide an LLM provider API key, and the template configures port binding, health checks, and restart policies. The resulting service exposes an HTTP/WebSocket API gateway with a baseline memory footprint under 5 MB and sub-10 ms cold starts.
+Deploying ZeroClaw involves building a statically compiled Rust binary inside a multi-stage Docker pipeline. The release image uses a distroless base (`gcr.io/distroless/cc-debian13:nonroot`) with no shell or package manager, running as a non-root user for minimal attack surface. Railway handles the Docker build automatically — you provide an Anthropic setup token (generated via `claude setup-token`), and the template configures port binding, health checks, and restart policies. The resulting service exposes an HTTP/WebSocket API gateway with a baseline memory footprint under 5 MB and sub-10 ms cold starts.
 
 ## Common Use Cases
 
@@ -15,7 +15,7 @@ Deploying ZeroClaw involves building a statically compiled Rust binary inside a 
 ## Dependencies for ZeroClaw Hosting
 
 - A [Railway account](https://railway.com)
-- An LLM provider API key (OpenRouter, OpenAI, Anthropic, Gemini, Groq, Mistral, DeepSeek, etc.)
+- An Anthropic setup token (run `claude setup-token` in [Claude Code](https://claude.com/claude-code) to generate one)
 
 ### Deployment Dependencies
 
@@ -46,9 +46,9 @@ Key environment variables:
 
 | Variable | Default | Description |
 |---|---|---|
-| `API_KEY` | *(required)* | LLM provider API key |
-| `PROVIDER` | `openrouter` | LLM provider name |
-| `ZEROCLAW_MODEL` | `anthropic/claude-sonnet-4-20250514` | Model identifier |
+| `ANTHROPIC_OAUTH_TOKEN` | *(required)* | Anthropic setup token (from `claude setup-token`) |
+| `PROVIDER` | `anthropic` | LLM provider name |
+| `ZEROCLAW_MODEL` | `claude-sonnet-4-20250514` | Model identifier |
 | `ZEROCLAW_TEMPERATURE` | `0.7` | Sampling temperature (0.0–2.0) |
 
 Railway injects `PORT` automatically. ZeroClaw reads it via the fallback chain: `ZEROCLAW_GATEWAY_PORT` → `PORT` → config default (42617).

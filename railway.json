@@ -4,25 +4,24 @@
     "dockerfilePath": "Dockerfile.railway"
   },
   "deploy": {
-    "startCommand": "zeroclaw gateway",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 10,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 3,
     "envVars": {
-      "API_KEY": {
-        "description": "LLM provider API key (e.g. OpenRouter, OpenAI, Anthropic)",
+      "ANTHROPIC_OAUTH_TOKEN": {
+        "description": "Anthropic setup token (run `claude setup-token` in Claude Code to generate one)",
         "required": true
       },
       "PROVIDER": {
-        "description": "LLM provider name (openrouter, openai, anthropic, gemini, groq, mistral, deepseek, ollama, etc.)",
+        "description": "LLM provider name (anthropic, openrouter, openai, gemini, groq, mistral, deepseek, ollama, etc.)",
         "required": false,
-        "default": "openrouter"
+        "default": "anthropic"
       },
       "ZEROCLAW_MODEL": {
-        "description": "Model to use (provider-specific format, e.g. anthropic/claude-opus-4-6)",
+        "description": "Model to use (e.g. claude-sonnet-4-20250514, claude-opus-4-6)",
         "required": false,
-        "default": "anthropic/claude-opus-4-6"
+        "default": "claude-sonnet-4-20250514"
       },
       "ZEROCLAW_TEMPERATURE": {
         "description": "Model temperature (0.0–2.0)",

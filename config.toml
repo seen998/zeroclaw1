@@ -280,9 +280,9 @@ provider = "none"
 
 [gateway]
 port = 42617
-host = "127.0.0.1"
+host = "0.0.0.0"
 require_pairing = true
-allow_public_bind = false
+allow_public_bind = true
 paired_tokens = ["enc2:86f5af087c4fd759514fd6e4f6b1e53156dd0f828627d32f2a2bcbd2276427d0b684b0e466832fbc90433acc1fcd56e6e3a2a55b8c89b8d0e7029938fd659e033b9b1f79870c83ba68001b2cc6b3118553d2a6bd3384d87ef9cbb321"]
 pair_rate_limit_per_minute = 10
 webhook_rate_limit_per_minute = 60

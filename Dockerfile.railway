@@ -65,6 +65,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/zeroclaw /usr/local/bin/zeroclaw
+COPY config.toml /app/config.toml
 COPY docker-entrypoint.railway.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 

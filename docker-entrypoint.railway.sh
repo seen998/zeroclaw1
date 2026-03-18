@@ -13,14 +13,13 @@ WORKSPACE_DIR="$DATA_DIR/workspace"
 
 mkdir -p "$CONFIG_DIR" "$WORKSPACE_DIR"
 
-# Write default config if the volume is fresh (first deploy)
-if [ ! -f "$CONFIG_DIR/config.toml" ]; then
-  if [ -f "/app/config.toml" ]; then
-    echo "Found pre-existing config.toml in /app, using it..."
-    cp "/app/config.toml" "$CONFIG_DIR/config.toml"
-  else
-    echo "No pre-existing config.toml, creating minimal default..."
-    cat > "$CONFIG_DIR/config.toml" <<CONF
+# Always sync config from repo if it exists, otherwise use minimal default for first run
+if [ -f "/app/config.toml" ]; then
+  echo "Syncing config.toml from /app to $CONFIG_DIR..."
+  cp "/app/config.toml" "$CONFIG_DIR/config.toml"
+elif [ ! -f "$CONFIG_DIR/config.toml" ]; then
+  echo "No pre-existing config.toml, creating minimal default..."
+  cat > "$CONFIG_DIR/config.toml" <<CONF
 workspace_dir = "$WORKSPACE_DIR"
 config_path = "$CONFIG_DIR/config.toml"
 default_provider = "anthropic"
@@ -31,7 +30,6 @@ default_temperature = 0.7
 host = "0.0.0.0"
 allow_public_bind = true
 CONF
-  fi
 fi
 
 chown -R "$ZEROCLAW_UID:$ZEROCLAW_GID" "$DATA_DIR"
